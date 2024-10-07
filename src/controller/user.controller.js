@@ -4,9 +4,14 @@ const jwt = require("jsonwebtoken");
 const { jwtSecrete } = require('../config');
 
 class UserController {
+  constructor() {
+    userModel.ensureIndexes()
+  }
 
   async register(body) {
     try {
+      const existing = userModel.findOne({ email: body.email });
+      if (existing) throw new Error("User with this email already exist");
       body.password = await bcrypt.hash(body.password, 10);
       const newUser = new userModel(body);
       let user = await newUser.save();
