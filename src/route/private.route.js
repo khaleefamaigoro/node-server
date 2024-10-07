@@ -7,7 +7,7 @@ module.exports = () => {
   const app = express.Router();
 
   //Get All
-  app.get('/',authMiddleware(["regular"]), async (req, res) => {
+  app.get('/', authMiddleware(["regular"]), async (req, res) => {
     try {
       const users = await userController.read();
       res.status(200).json(users);

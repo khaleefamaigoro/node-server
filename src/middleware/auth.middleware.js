@@ -9,10 +9,12 @@ const authMiddleware = (userTypes)=> (req, res, next) =>{
     }
     const payload = jwt.verify(token, jwtSecrete)
     req.user = payload
+
+
     if (!payload) {
       return res.status(401).send("invalid token found")
     }
-    if (!userTypes.includes(payload.userTypes)) {
+    if (!userTypes.includes(payload.userType)) {
       return res.status(401).send("Not Authorise")
     }
     next();
